@@ -1,8 +1,5 @@
 
-// input field name
-var inputName;
-
-// arrays for localstorae
+// global arrays for data
 var names = [];
 var age = [];
 var gender = [];
@@ -10,12 +7,18 @@ var gender = [];
 
 /*
  * Funktion wird nachdem die Seite geladen wurde aufgerufen
- * Listener werden registriert und die gespeicherten Daten ausgelesen
+ * Listener werden registriert
  */
 function init(){
+	// get button and add event listener
 	var savebutton = document.getElementById("save_button")
 	savebutton.addEventListener("click",clickedSpeichern,true);
-	
+}
+
+/*
+ * Funktion liest die Daten aus dem LocalStorage
+ */
+function getLocalStorageData(){
 	// get saved data
 	names = JSON.parse(localStorage["names"]);
 	age = JSON.parse(localStorage["age"]);
@@ -30,73 +33,53 @@ function init(){
  */
 function clickedSpeichern(event){
 
-	inputName = window.document.getElementById("input_name");
-	var name = inputName.value;
+	var inputNameField = window.document.getElementById("input_name");
+	var inputName = inputNameField.value;
     // verify user input
-	if (name === ""){
+	if (inputName === ""){
 		alert("Es wurde kein Name eingegeben!");
 	} else {
 		// save data
 
 		// save name
-		names.push(name);
+		names.push(inputName);
 		localStorage["names"] = JSON.stringify(names);
 
 		// save age
-		inputAge = window.document.getElementById("slider");
-		var inputAge = slider.value;
+		var inputAge = (window.document.getElementById("slider")).value;
 		age.push(inputAge);
 		localStorage["age"] = JSON.stringify(age);		
 		
 		// save gender		
-		inputGender = document.querySelector('input[name="radio-choice-1"]:checked').value;
+		var inputGender = document.querySelector('input[name="radio-choice-1"]:checked').value;
 		gender.push(inputGender);
-		localStorage["gender"] = JSON.stringify(gender);	
+		localStorage["gender"] = JSON.stringify(gender);
 
 		// notify user via alert
 		alert("Daten gespeichert!");
-		
+
 		// reset value of input field
-		inputName.value = "";
-		
+		inputNameField.value = "";
+
 		// update list
-		showData();		
-	}	
+		showData();
+	}
 	event.stopPropagation();
 }
 
 
 /*
- * Funktion liest Daten aus localStorage und
- * zeigt diese in einer Liste an
+ * Funktion zeigt Daten in einer Liste an
  */
 function showData(){
-	
-	// get names
-	var storedNames = JSON.parse(localStorage["names"]);
-	
+
 	// loesche derzeitige Liset
 	$( "#datalist" ).empty();
-	
-	// get ages
-	var ages = [];
-	var storedAges = JSON.parse(localStorage["age"]);
-	storedAges.forEach(function(entry){
-		ages.push(entry);		
-	});	
 
-	// get genders
-	var genders = [];
-	var storedGenders = JSON.parse(localStorage["gender"]);
-	storedGenders.forEach(function(entry){
-		genders.push(entry);		
-	});	
-	
 	// build list
 	var i = 0
-	storedNames.forEach(function(entry){
-		$( "#datalist" ).append( "<li>" + entry + ", " + ages[i] + ", " + genders[i] + "</li>" );
+	names.forEach(function(entry){
+		$("#datalist").append("<li>" + entry + ", " + age[i] + ", " + gender[i] + "</li>");
 		i++;
 	});
-	
 }
