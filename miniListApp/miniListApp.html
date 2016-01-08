@@ -14,34 +14,45 @@
 	<div data-role="page" id="home">
 		<div data-role="header">
 			<h1>My miniListWebApp</h1>
+			<a href="#positionWindow" class="ui-btn-right ui-corner-all ui-shadow ui-btn-inline" data-rel="popup" data-position-to="window">Info</a>
+			<div data-role="popup" id="positionWindow" class="ui-content" data-theme="e">
+				<p>Demo WebApp based on JQuery Mobile</p>
+				</br>
+				<p>WebApp to store user data. Data is stored with HTML5 Local Storage.</p>				
+				</br>
+				<p>Daniel Schwenk</p>
+			</div>
 		</div>
 		<div data-role="content">
 
-		<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-			 <label for="name" class="ui-input-text">Name:</label>
-			 <input type="text" name="name" id="input_name" value="" class="ui-input-text ui-body-c ui-corner-all">
-		</div>
-		
-	
-		<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-			<label for="slider" id="slider-label" class="ui-slider ui-input-text">Alter:</label>
-			<input type="number" data-type="range" name="slider" id="slider" value="30" min="0" max="100" class="ui-slider-input ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
-		</div>
-		
-		<div data-role="fieldcontain">
-			<fieldset data-role="controlgroup">
-			<legend>Geschleht</legend>
-				<input type="radio" name="radio-choice-1" id="radio-choice-1" value="M" checked="checked" />
-				<label for="radio-choice-1">männlich</label>
+			<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+				 <label for="name" class="ui-input-text">Name:</label>
+				 <input type="text" name="name" id="input_name" value="" class="ui-input-text ui-body-c ui-corner-all">
+			</div>
 
-				<input type="radio" name="radio-choice-1" id="radio-choice-2" value="W"  />
-				<label for="radio-choice-2">weiblich</label>
-			</fieldset>
-		</div>
+			<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+				<label for="slider" id="slider-label" class="ui-slider ui-input-text">Alter:</label>
+				<input type="number" data-type="range" name="slider" id="slider" value="30" min="0" max="100" class="ui-slider-input ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
+			</div>
+			
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+				<legend>Geschleht</legend>
+					<input type="radio" name="radio-choice-1" id="radio-choice-1" value="M" checked="checked" />
+					<label for="radio-choice-1">männlich</label>
 
-		<button class="ui-btn" id="save_button">Speichern</button>
+					<input type="radio" name="radio-choice-1" id="radio-choice-2" value="W"  />
+					<label for="radio-choice-2">weiblich</label>
+				</fieldset>
+			</div>
+
+			<button class="ui-btn" id="save_button">Speichern</button>
 		
 		</div>
+		
+		<div data-role="popup" id="popup_no_name" data-position-to="window" data-transition="turn" data-theme="e"><p>Bitte geben Sie einen Namen ein!</p></div>
+		<div data-role="popup" id="popup_data_saved" data-position-to="window" data-transition="turn" data-theme="e"><p>Daten gespeichert!</p></div>
+			
 		<div data-role="footer">		
 			<div data-role="navbar">
 				<ul>
@@ -52,9 +63,11 @@
 		</div><!-- /footer -->
     </div>
 	
+
 	<div data-role="page" id="list">
 		<div data-role="header">
 			<h1>My miniListWebApp</h1>
+			<button class="ui-btn-right" id="liste_loeschen_button">Delete List</button>
 		</div>
 		<div data-role="content">
 			<p>
@@ -66,6 +79,10 @@
 				</ul>
 			</p>
 		</div>
+		
+		<div data-role="popup" id="popup_data_deleted" data-position-to="window" data-transition="turn" data-theme="e"><p>Daten gelöscht!</p></div>
+		<div data-role="popup" id="popup_no_stored_data" data-position-to="window" data-transition="turn" data-theme="e"><p>Kann nicht löschen, Liste ist leer!</p></div>		
+		
 		<div data-role="footer">		
 			<div data-role="navbar">
 				<ul>

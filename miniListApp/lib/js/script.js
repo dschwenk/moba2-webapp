@@ -10,9 +10,12 @@ var gender = [];
  * Listener werden registriert
  */
 function init(){
-	// get button and add event listener
+	// get buttons and add event listener
 	var savebutton = document.getElementById("save_button")
 	savebutton.addEventListener("click",clickedSpeichern,true);
+	
+	var deletebutton = document.getElementById("liste_loeschen_button")
+	deletebutton.addEventListener("click",clickedLoeschen,true);
 }
 
 /*
@@ -37,7 +40,7 @@ function clickedSpeichern(event){
 	var inputName = inputNameField.value;
     // verify user input
 	if (inputName === ""){
-		alert("Es wurde kein Name eingegeben!");
+		$("#popup_no_name").popup("open");		
 	} else {
 		// save data
 
@@ -48,15 +51,15 @@ function clickedSpeichern(event){
 		// save age
 		var inputAge = (window.document.getElementById("slider")).value;
 		age.push(inputAge);
-		localStorage["age"] = JSON.stringify(age);		
+		localStorage["age"] = JSON.stringify(age);
 		
 		// save gender		
 		var inputGender = document.querySelector('input[name="radio-choice-1"]:checked').value;
 		gender.push(inputGender);
 		localStorage["gender"] = JSON.stringify(gender);
 
-		// notify user via alert
-		alert("Daten gespeichert!");
+		// notify user via popup
+		$("#popup_data_saved").popup("open");
 
 		// reset value of input field
 		inputNameField.value = "";
@@ -65,6 +68,38 @@ function clickedSpeichern(event){
 		showData();
 	}
 	event.stopPropagation();
+}
+
+
+/*
+ * Funnktion reagiert auf den Klick auf den
+ * Löschen Button. Gespeicherte Daten werden gelöscht
+ */
+function clickedLoeschen(event){
+	
+	// verify if there is any data
+	if((names.length >= 1) && (age.length >= 1) && (gender.length >= 1)){
+		// delete names
+		names = [];
+		localStorage["names"] = JSON.stringify(names);
+		// delete ages		
+		age = [];
+		localStorage["age"] = JSON.stringify(age);
+		// delete gender		
+		gender = [];	
+		localStorage["gender"] = JSON.stringify(gender);
+			
+		// notify user via popup
+		$("#popup_data_deleted").popup("open");
+
+		// update list
+		showData();
+	}
+	// there are no entries
+	else {
+		// notify user via popup
+		$("#popup_no_stored_data").popup("open");
+	}
 }
 
 
