@@ -7,7 +7,7 @@ var gender = [];
 
 /*
  * Funktion wird nachdem die Seite geladen wurde aufgerufen
- * Listener werden registriert
+ * Listener werden registriert + context menu code
  */
 function init(){
 	// get buttons and add event listener
@@ -16,7 +16,57 @@ function init(){
 	
 	var deletebutton = document.getElementById("liste_loeschen_button")
 	deletebutton.addEventListener("click",clickedLoeschen,true);
+
+	var deleteLink = document.getElementById("link_delete")
+	deleteLink.addEventListener("click",clickedLoeschen,true);
+	
+	// context menu
+	// http://www.voidtricks.com/custom-right-click-context-menu/
+	$(document).ready(function () {
+		$("html").on("contextmenu",function(e){
+			//prevent default context menu for right click
+			e.preventDefault();
+
+			var menu = $(".menu"); 
+
+			//hide menu if already shown
+			menu.hide(); 
+
+			//get x and y values of the click event
+			var pageX = e.pageX;
+			var pageY = e.pageY;
+
+			//position menu div near mouse cliked area
+			menu.css({top: pageY , left: pageX});
+
+			var mwidth = menu.width();
+			var mheight = menu.height();
+			var screenWidth = $(window).width();
+			var screenHeight = $(window).height();
+
+			//if window is scrolled
+			var scrTop = $(window).scrollTop();
+
+			//if the menu is close to right edge of the window
+			if(pageX+mwidth > screenWidth){
+				menu.css({left:pageX-mwidth});
+			}
+
+			//if the menu is close to bottom edge of the window
+			if(pageY+mheight > screenHeight+scrTop){
+				menu.css({top:pageY-mheight});
+			}
+
+			//finally show the menu
+			menu.show();
+		}); 
+		
+		$("html").on("click", function(){
+			$(".menu").hide();
+		});
+	});
 }
+
 
 /*
  * Funktion liest die Daten aus dem LocalStorage
@@ -40,7 +90,8 @@ function clickedSpeichern(event){
 	var inputName = inputNameField.value;
     // verify user input
 	if (inputName === ""){
-		$("#popup_no_name").popup("open");		
+		$("#input_name").focus();
+		$("#popup_no_name").popup("open");
 	} else {
 		// save data
 
@@ -112,9 +163,15 @@ function showData(){
 	$( "#datalist" ).empty();
 
 	// build list
-	var i = 0
-	names.forEach(function(entry){
-		$("#datalist").append("<li>" + entry + ", " + age[i] + ", " + gender[i] + "</li>");
-		i++;
-	});
+	if(names.length == 0){
+		// no entries
+		$("#datalist").append("<li>" + "keine Einträge vorhanden!" + "</li>");
+	}
+	else {
+		var i = 0
+		names.forEach(function(entry){
+			$("#datalist").append("<li>" + entry + ", " + age[i] + ", " + gender[i] + "</li>");
+			i++;
+		});		
+	}
 }
