@@ -14,7 +14,7 @@
 	<div data-role="page" id="home">
 		<div data-role="header">
 			<h1>My miniListWebApp</h1>
-			<a href="#positionWindow" class="ui-btn-right ui-corner-all ui-shadow ui-btn-inline" data-rel="popup" data-position-to="window">Info</a>
+			<a href="#positionWindow" class="ui-btn-left ui-corner-all ui-shadow ui-btn-inline" data-rel="popup" data-position-to="window">Info</a>
 			<div data-role="popup" id="positionWindow" class="ui-content" data-theme="e">
 				<p>Demo WebApp based on JQuery Mobile</p>
 				</br>
@@ -68,14 +68,24 @@
 		<div data-role="header">
 			<h1>My miniListWebApp</h1>
 			<button class="ui-btn-right" id="liste_loeschen_button">Delete List</button>
+			<a href="#positionWindow" class="ui-btn-left ui-corner-all ui-shadow ui-btn-inline" data-rel="popup" data-position-to="window">Info</a>
+			<div data-role="popup" id="positionWindow" class="ui-content" data-theme="e">
+				<p>Demo WebApp based on JQuery Mobile</p>
+				</br>
+				<p>WebApp to store user data. Data is stored with HTML5 Local Storage.</p>				
+				</br>
+				<p>Daniel Schwenk</p>
+			</div>
 		</div>
 		<div data-role="content">
 			<p>
 				<ul id="datalist">
-					<script type="text/javascript">
-						getLocalStorageData();
-						showData();
-					</script>
+					<div id="collapsibleSet" data-role="collapsible-set">
+						<script type="text/javascript">
+							getLocalStorageData();
+							showData();
+						</script>
+					</div>
 				</ul>
 			</p>
 		</div>

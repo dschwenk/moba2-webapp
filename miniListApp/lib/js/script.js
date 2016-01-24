@@ -170,8 +170,11 @@ function showData(){
 	else {
 		var i = 0
 		names.forEach(function(entry){
-			$("#datalist").append("<li>" + entry + ", " + age[i] + ", " + gender[i] + "</li>");
+			// add collapsible with user data
+			$("#datalist").append("<div data-role='collapsible' data-collapsed-icon='arrow-r' and data-expanded-icon='arrow-d' data-collapsed='true' data-inset='true' data-theme='e' data-content-theme='e'><h1>" + entry + "</h1><p>Name: " + entry + "</br>Alter: " + age[i] + "</br>Geschlecht: " + gender[i] + "</p></div>");
+			// call collapsible() - otherwise collapsible is not shownn correctly (http://stackoverflow.com/questions/4214538/dynamically-adding-collapsible-elements)
+			$('div[data-role=collapsible]').collapsible();
 			i++;
-		});		
+		});
 	}
 }
