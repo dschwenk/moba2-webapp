@@ -1,8 +1,6 @@
 
-// global arrays for data
-var names = [];
-var age = [];
-var gender = [];
+// global array for user data objects
+var user_data_array = [];
 
 
 /*
@@ -73,9 +71,7 @@ function init(){
  */
 function getLocalStorageData(){
 	// get saved data
-	names = JSON.parse(localStorage["names"]);
-	age = JSON.parse(localStorage["age"]);
-	gender = JSON.parse(localStorage["gender"]);
+	user_data_array = JSON.parse(localStorage["user_data_array"]);
 }
 
 
@@ -93,22 +89,24 @@ function clickedSpeichern(event){
 		$("#input_name").focus();
 		$("#popup_no_name").popup("open");
 	} else {
-		// save data
-
-		// save name
-		names.push(inputName);
-		localStorage["names"] = JSON.stringify(names);
-
-		// save age
+		// get age
 		var inputAge = (window.document.getElementById("slider")).value;
-		age.push(inputAge);
-		localStorage["age"] = JSON.stringify(age);
 		
-		// save gender		
+		// get gender		
 		var inputGender = document.querySelector('input[name="radio-choice-1"]:checked').value;
-		gender.push(inputGender);
-		localStorage["gender"] = JSON.stringify(gender);
 
+		// create new user object with input data
+		var user_object =  {
+			'Name' : inputName , 
+			'Age' : inputAge ,
+			'Gender' : inputGender
+		};
+
+		// add object to user data array
+		user_data_array.push(user_object);
+		// save data to local storage
+		localStorage["user_data_array"] = JSON.stringify(user_data_array);
+		
 		// notify user via popup
 		$("#popup_data_saved").popup("open");
 
@@ -129,16 +127,12 @@ function clickedSpeichern(event){
 function clickedLoeschen(event){
 	
 	// verify if there is any data
-	if((names.length >= 1) && (age.length >= 1) && (gender.length >= 1)){
-		// delete names
-		names = [];
-		localStorage["names"] = JSON.stringify(names);
-		// delete ages		
-		age = [];
-		localStorage["age"] = JSON.stringify(age);
-		// delete gender		
-		gender = [];	
-		localStorage["gender"] = JSON.stringify(gender);
+	if(user_data_array.length >= 1){
+		
+		// delete data
+		user_data_array = [];
+		// write empty array to local storage
+		localStorage["user_data_array"] = JSON.stringify(user_data_array);		
 			
 		// notify user via popup
 		$("#popup_data_deleted").popup("open");
@@ -163,18 +157,18 @@ function showData(){
 	$( "#datalist" ).empty();
 
 	// build list
-	if(names.length == 0){
+	if((user_data_array.length == 0) || (user_data_array == "")){
 		// no entries
 		$("#datalist").append("<li>" + "keine Einträge vorhanden!" + "</li>");
 	}
 	else {
 		var i = 0
-		names.forEach(function(entry){
+		// iterate over all user objects
+		user_data_array.forEach(function(user_object){
 			// add collapsible with user data
-			$("#datalist").append("<div data-role='collapsible' data-collapsed-icon='arrow-r' and data-expanded-icon='arrow-d' data-collapsed='true' data-inset='true' data-theme='e' data-content-theme='e'><h1>" + entry + "</h1><p>Name: " + entry + "</br>Alter: " + age[i] + "</br>Geschlecht: " + gender[i] + "</p></div>");
-			// call collapsible() - otherwise collapsible is not shownn correctly (http://stackoverflow.com/questions/4214538/dynamically-adding-collapsible-elements)
+			$("#datalist").append("<div data-role='collapsible' data-collapsed-icon='arrow-r' and data-expanded-icon='arrow-d' data-collapsed='true' data-inset='true' data-theme='e' data-content-theme='e'><h1>" + user_object.Name + "</h1><p>Name: " + user_object.Name + "</br>Alter: " + user_object.Age + "</br>Geschlecht: " + user_object.Gender + "</p></div>");
+			// call collapsible() - otherwise collapsible is not shown correctly (http://stackoverflow.com/questions/4214538/dynamically-adding-collapsible-elements)
 			$('div[data-role=collapsible]').collapsible();
-			i++;
-		});
+		});		
 	}
 }
